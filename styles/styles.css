@@ -1,0 +1,426 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Raleway", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100vh;
+    background: #005E33;
+    background: linear-gradient(0deg, rgba(0, 94, 51, 1) 0%, rgba(21, 53, 46, 1) 100%);
+    padding-top: 40px;
+    overflow: hidden;
+}
+
+#hud {
+    display: flex;
+    gap: 30px;
+    color: white;
+    font-size: 20px;
+    margin-bottom: 20px;
+    background: #005E33;
+    background: linear-gradient(90deg, rgba(0, 94, 51, 1) 0%, rgba(21, 53, 46, 1) 100%);
+    padding: 10px 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+#hud>div {
+    /* Target the direct children divs of #hud */
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    /* Adjust as needed for spacing between icon and text */
+}
+
+.title {
+    font-size: 7vh;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: white;
+}
+
+#puzzle {
+    display: grid;
+    grid-template-columns: repeat(3, 130px);
+    /* Increased from 100px */
+    grid-template-rows: repeat(3, 130px);
+    /* Increased from 100px */
+    gap: 5px;
+    border: 4px solid #13342D;
+    border-radius: 10px;
+    background-color: #15352E;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.piece {
+    width: 130px;
+    /* Increased from 100px */
+    height: 130px;
+    /* Increased from 100px */
+    background-size: 390px 390px;
+    /* Corrected from 370px 370px */
+    background-repeat: no-repeat;
+    /* Added to prevent tiling */
+    border-radius: 6px;
+    cursor: grab;
+    transition: transform 0.3s ease;
+}
+
+.piece:active {
+    cursor: grabbing;
+    transform: scale(1.05);
+}
+
+.correct {
+    outline: 2px solid limegreen;
+}
+
+.button-1 {
+    display: flex;
+    gap: 30px;
+    color: white;
+    font-size: 20px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    background: #E7662D;
+    background: linear-gradient(90deg, rgba(231, 102, 45, 1) 29%, rgba(210, 62, 39, 1) 100%);
+    padding: 10px 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    border: none;
+    cursor: pointer;
+    font-family: 'Raleway', sans-serif;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+}
+
+.button-1:hover {
+    transform: scale(1.05);
+}
+
+.right-bottom {
+    position: absolute;
+    top: 40vh;
+    right: 1vh;
+}
+
+.left-top {
+    position: absolute;
+    top: -2vh;
+    left: 1vh;
+}
+
+.left-top svg {
+    width: 18vw;
+    height: 80vh;
+}
+
+.right-bottom svg {
+    width: 26vw;
+    height: 96vh;
+}
+
+/* Popup */
+#popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 999;
+}
+
+#popup.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Modal Content */
+.popup-content {
+    background: linear-gradient(to bottom right, #4CAF50, #2E7D32);
+    border-radius: 24px;
+    padding: 30px;
+    width: 350px;
+    text-align: left;
+    color: white;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    font-family: 'Arial', sans-serif;
+}
+
+.popup-content h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+/* Info Box */
+.info-box {
+    background: linear-gradient(to bottom right, #003d2b, #00512d);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 24px;
+    font-size: 16px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    max-width: 250px;
+}
+
+.info-box p {
+    margin: 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.info-box strong {
+    font-weight: bold;
+}
+
+/* Button */
+.popup-content button {
+    width: 100%;
+    background: linear-gradient(to right, #f15a29, #d62d20);
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 16px;
+    padding: 14px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.popup-content button:hover {
+    transform: scale(1.03);
+}
+
+
+.popup-fundo {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.popup-caixa {
+    background: linear-gradient(to bottom right, #4CAF50, #2E7D32);
+    border-radius: 30px;
+    padding: 20px 20px 20px;
+    width: 330px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.conteudo {
+    display: flex;
+    background: #005f30;
+    width: 300px;
+    height: 300px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    background-size: cover;
+    background-position: center;
+}
+
+.fechar-btn {
+    background: linear-gradient(to right, #f15a29, #d62d20);
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: transform 0.1s ease;
+    width: 100%;
+}
+
+.fechar-btn:hover {
+    transform: scale(1.05);
+}
+
+/* From Uiverse.io by bociKond */
+
+
+.body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    /* Centraliza horizontalmente */
+    align-items: center;
+    /* Centraliza verticalmente */
+}
+
+.form {
+    background: #005E33;
+    background: linear-gradient(65deg, rgba(0, 94, 51, 1) 0%, rgba(21, 53, 46, 1) 100%);
+    padding: 3rem 2.5rem;
+    border-radius: 30px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 510px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: #fff;
+    font-weight: 600;
+    text-align: center;
+}
+
+.form-control {
+    position: relative;
+    margin: 20px 0 40px;
+    width: 100%;
+}
+
+.form-control input {
+    background-color: transparent;
+    border: 0;
+    border-bottom: 2px #fff solid;
+    display: block;
+    width: 100%;
+    padding: 15px 0;
+    font-size: 18px;
+    color: #fff;
+}
+
+.form-control input:focus,
+.form-control input:valid {
+    outline: 0;
+    border-bottom-color: #FFFFFF;
+}
+
+.form-control label {
+    position: absolute;
+    top: 15px;
+    left: 0;
+    pointer-events: none;
+}
+
+.form-control label span {
+    display: inline-block;
+    font-size: 18px;
+    min-width: 5px;
+    color: #fff;
+    transition: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.form-control input:focus+label span,
+.form-control input:valid+label span {
+    color: #FFFFFF;
+    transform: translateY(-30px);
+}
+
+.submit {
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(to right, #ff6e3d, #d62d20);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1.3rem;
+    transition: background 0.3s;
+    margin-top: 1rem;
+}
+
+.submit:hover {
+    background-color: #5848e5;
+}
+
+.form-footer {
+    margin-top: 1.5rem;
+    font-size: 0.95rem;
+    color: #666;
+}
+
+.form-footer a {
+    color: #6c63ff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+
+/* From Uiverse.io by Fernando-sv */
+.loader {
+    border: 4px solid rgb(255, 255, 255);
+    border-left-color: transparent;
+    border-radius: 50%;
+}
+
+.loader {
+    border: 4px solid rgba(255, 255, 255);
+    border-left-color: transparent;
+    width: 15px;
+    height: 15px;
+}
+
+.loader {
+    border: 4px solid rgba(255, 255, 255);
+    border-left-color: transparent;
+    width: 15px;
+    height: 15px;
+    animation: spin89345 1s linear infinite;
+}
+
+
+
+
+
+@keyframes spin89345 {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@media (max-width: 500px) {
+    #puzzle {
+        grid-template-columns: repeat(3, 100px);
+        /* Increased from 80px */
+        grid-template-rows: repeat(3, 100px);
+        /* Increased from 80px */
+    }
+
+    .piece {
+        width: 100px;
+        /* Increased from 80px */
+        height: 100px;
+        /* Increased from 80px */
+        background-size: 300px 300px;
+        /* Increased from 240px 240px */
+    }
+}
