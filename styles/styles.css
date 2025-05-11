@@ -73,6 +73,12 @@ body {
     border-radius: 6px;
     cursor: grab;
     transition: transform 0.3s ease;
+    touch-action: none;
+}
+
+.piece.selected {
+    outline: 3px solid #f79431;
+    z-index: 2;
 }
 
 .piece:active {
@@ -176,7 +182,7 @@ body {
     margin-bottom: 24px;
     font-size: 16px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    max-width: 250px;
+    max-width: 300px;
 }
 
 .info-box p {
@@ -409,18 +415,139 @@ body {
 
 @media (max-width: 500px) {
     #puzzle {
-        grid-template-columns: repeat(3, 100px);
-        /* Increased from 80px */
-        grid-template-rows: repeat(3, 100px);
-        /* Increased from 80px */
+        width: 270px;
+        height: 270px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        gap: 3px;
     }
 
     .piece {
-        width: 100px;
-        /* Increased from 80px */
-        height: 100px;
-        /* Increased from 80px */
-        background-size: 300px 300px;
-        /* Increased from 240px 240px */
+        width: 100%;
+        height: 100%;
+        aspect-ratio: 1 / 1;
+        background-size: 270px 270px;
+        background-repeat: no-repeat;
+    }
+
+    .conteudo {
+        width: 90vw;
+        max-width: 300px;
+        aspect-ratio: 1 / 1;
+    }
+
+    .popup-content,
+    .popup-caixa {
+        width: 90vw;
+        padding: 16px;
+    }
+
+    .left-top svg,
+    .right-bottom svg {
+        display: none;
     }
 }
+
+@media (max-width: 500px) {
+    body {
+        padding: 20px 10px;
+        overflow-y: auto;
+    }
+
+    .title {
+        font-size: 5vh;
+        text-align: center;
+        margin-top: 10vh;
+    }
+
+    #hud {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        font-size: 16px;
+        padding: 12px;
+    }
+
+    #puzzle {
+        grid-template-columns: repeat(3, 90px);
+        grid-template-rows: repeat(3, 90px);
+        gap: 4px;
+    }
+
+    .piece {
+        width: 90px;
+        height: 90px;
+        background-size: 270px 270px;
+    }
+
+    .button-1 {
+        font-size: 16px;
+        padding: 8px 8px;
+        text-align: center;
+    }
+
+    .box-button {
+        justify-content: center;
+        display: flex;
+        align-items: center;
+        margin-left: 4vw;
+    }
+
+    .popup-content,
+    .popup-caixa {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .conteudo {
+        width: 90%;
+        height: auto;
+        aspect-ratio: 1 / 1;
+    }
+
+    .left-top svg,
+    .right-bottom svg {
+        display: none;
+        /* Oculta os SVGs decorativos */
+    }
+}
+
+
+@media (min-width: 501px) and (max-width: 768px) {
+    #hud {
+        gap: 20px;
+        font-size: 18px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .title {
+        font-size: 6vh;
+        text-align: center;
+    }
+
+    #puzzle {
+        grid-template-columns: repeat(3, 110px);
+        grid-template-rows: repeat(3, 110px);
+        gap: 5px;
+    }
+
+    .piece {
+        width: 110px;
+        height: 110px;
+        background-size: 330px 330px;
+    }
+
+    .button-1 {
+        font-size: 18px;
+        padding: 10px 20px;
+    }
+
+    .left-top svg,  
+    .right-bottom svg {
+        width: 20vw;
+        height: auto;
+        opacity: 0.4;
+    }
+}   

@@ -103,7 +103,7 @@
       <h2>Você completou o quebra cabeça</h2>
 
       <div class="info-box">
-        <p>🕒 <strong>Seu Tempo:</strong> <span id="final-time">12</span>s</p>
+        <p>🕒 <strong>Seu Tempo:</strong> <span id="final-time">12</span></p>
         <p>⭐ <strong>Pontuação:</strong> <span id="final-score">1000</span></p>
       </div>
       <button onclick="restartGame()">Jogar novamente</button>
@@ -124,183 +124,140 @@
     </svg>
 
   </div>
-  <script>
-    const puzzle = document.getElementById('puzzle');
-    const timerDisplay = document.getElementById('timer');
-    const scoreDisplay = document.getElementById('score');
-    const statusDisplay = document.getElementById('status');
-    const popup = document.getElementById('popup');
-    const finalTime = document.getElementById('final-time');
-    const finalScore = document.getElementById('final-score');
-    const OpenPopupRef = document.getElementById('popup-ref');
+ <script>
+  const puzzle = document.getElementById('puzzle');
+  const timerDisplay = document.getElementById('timer');
+  const scoreDisplay = document.getElementById('score');
+  const popup = document.getElementById('popup');
+  const finalTime = document.getElementById('final-time');
+  const finalScore = document.getElementById('final-score');
 
+  let positions = Array.from({ length: 9 }, (_, i) => i);
+  const images = ['Soulcitro3.png', 'Soulcitro2.png', 'Soulcitro.png'];
+  const imgSrc = images[Math.floor(Math.random() * images.length)];
+  document.querySelector('.conteudo').style.backgroundImage = `url(${imgSrc})`;
 
-    let positions = Array.from({ length: 9 }, (_, i) => i);
-    const images = ['Soulcitro3.png', 'Soulcitro2.png', 'Soulcitro.png'];
-    const imgSrc = images[Math.floor(Math.random() * images.length)];
-    document.querySelector('.conteudo').style.backgroundImage = `url(${imgSrc})`;
+  let firstSelected = null;
+  let score = 1000;
+  let time = 0;
+  let timerInterval;
 
-    let draggedPiece = null;
-    let score = 1000;
-    let time = 0;
-    let timerInterval;
-
-    function shuffle(array) {
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
+  function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
     }
+  }
 
-    function startTimer() {
-      time = 0;
-      timerDisplay.textContent = '0s'; // Initial display
-      clearInterval(timerInterval); // Clear any existing interval
-      timerInterval = setInterval(() => {
-        time++;
-        if (time < 60) {
-          timerDisplay.textContent = time + 's';
-        } else {
-          const minutes = Math.floor(time / 60);
-          const seconds = time % 60;
-          timerDisplay.textContent = `${minutes}m ${seconds.toString().padStart(2, '0')}s`;
-        }
-      }, 1000);
-    }
-
-    function stopTimer() {
-      clearInterval(timerInterval);
-    }
-
-    function updateScore(points) {
-      score = Math.max(0, score - points);
-      scoreDisplay.textContent = score;
-
-      function drop(e) {
-        const targetPiece = e.target;
-
-        if (draggedPiece === targetPiece) return;
-
-        const draggedIndex = [...puzzle.children].indexOf(draggedPiece);
-        const targetIndex = [...puzzle.children].indexOf(targetPiece);
-
-        // Troca apenas os dois elementos
-        const temp = document.createElement('div');
-        puzzle.replaceChild(temp, draggedPiece);
-        puzzle.replaceChild(draggedPiece, targetPiece);
-        puzzle.replaceChild(targetPiece, temp);
-
-        updateScore(10);
-        checkVictory();
-      }
-
-      function checkVictory() {
-        const children = [...puzzle.children];
-        const correct = children.every((child, index) => +child.dataset.index === index);
-
-        if (correct) {
-          stopTimer();
-          // Update final time display to also show minutes if applicable
-          if (time < 60) {
-            finalTime.textContent = time + 's';
-          } else {
-            const minutes = Math.floor(time / 60);
-            const seconds = time % 60;
-            finalTime.textContent = `${minutes}m ${seconds.toString().padStart(2, '0')}s`;
-          }
-          finalScore.textContent = score;
-          popup.classList.add('active');
-        }
-
-        document.getElementById('result-image').style.backgroundImage = `url(${imgSrc})`;
-
-      }
-    }
-
-    function createPieces() {
-      shuffle(positions);
-      puzzle.innerHTML = '';
-
-      positions.forEach((pos, index) => {
-        const piece = document.createElement('div');
-        piece.classList.add('piece');
-        piece.draggable = true;
-        piece.dataset.index = pos;
-        piece.dataset.position = index;
-        piece.style.backgroundImage = `url(${imgSrc})`;
-        piece.style.backgroundPosition = `-${(pos % 3) * 130}px -${Math.floor(pos / 3) * 130}px`; /* Changed 100 to 130 */
-
-        piece.addEventListener('dragstart', dragStart);
-        piece.addEventListener('dragover', dragOver);
-        piece.addEventListener('drop', drop);
-        piece.addEventListener('dragenter', e => e.preventDefault());
-
-        puzzle.appendChild(piece);
-      });
-    }
-
-    function dragStart(e) {
-      draggedPiece = e.target;
-    }
-
-    function dragOver(e) {
-      e.preventDefault();
-    }
-
-    function drop(e) {
-      const targetPiece = e.target;
-
-      if (draggedPiece === targetPiece) return;
-
-      const draggedIndex = [...puzzle.children].indexOf(draggedPiece);
-      const targetIndex = [...puzzle.children].indexOf(targetPiece);
-
-      // Troca apenas os dois elementos
-      const temp = document.createElement('div');
-      puzzle.replaceChild(temp, draggedPiece);
-      puzzle.replaceChild(draggedPiece, targetPiece);
-      puzzle.replaceChild(targetPiece, temp);
-
-      updateScore(10);
-      checkVictory();
-    }
-
-    function checkVictory() {
-      const children = [...puzzle.children];
-      const correct = children.every((child, index) => +child.dataset.index === index);
-
-      if (correct) {
-        stopTimer();
+  function startTimer() {
+    time = 0;
+    timerDisplay.textContent = '0s';
+    clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+      time++;
+      if (time < 60) {
+        timerDisplay.textContent = time + 's';
+      } else {
         const minutes = Math.floor(time / 60);
         const seconds = time % 60;
-        finalTime.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-        finalScore.textContent = score;
-        popup.classList.add('active');
+        timerDisplay.textContent = `${minutes}m ${seconds.toString().padStart(2, '0')}s`;
       }
+    }, 1000);
+  }
+
+  function stopTimer() {
+    clearInterval(timerInterval);
+  }
+
+  function updateScore(points) {
+    score = Math.max(0, score - points);
+    scoreDisplay.textContent = score;
+  }
+
+  function checkVictory() {
+    const children = [...puzzle.children];
+    const correct = children.every((child, index) => +child.dataset.index === index);
+    if (correct) {
+      stopTimer();
+      const minutes = Math.floor(time / 60);
+      const seconds = time % 60;
+      finalTime.textContent = time < 60 ? `${time}s` : `${minutes}m ${seconds.toString().padStart(2, '0')}s`;
+      finalScore.textContent = score;
+      popup.classList.add('active');
     }
+  }
 
+  function pieceClick(e) {
+    const piece = e.currentTarget;
 
-
-    function restartGame() {
-      popup.classList.remove('active');
-      score = 1000; // Reset score to initial value
-      scoreDisplay.textContent = score;
-      // Time will be reset by startTimer
-      window.location.href = "ref.html";
+    if (!firstSelected) {
+      firstSelected = piece;
+      piece.classList.add('selected');
+    } else if (firstSelected === piece) {
+      piece.classList.remove('selected');
+      firstSelected = null;
+    } else {
+      swapPieces(firstSelected, piece);
+      firstSelected.classList.remove('selected');
+      firstSelected = null;
     }
+  }
 
-    // Inicia o jogo ao carregar
-    createPieces();
-    startTimer();
+  function swapPieces(piece1, piece2) {
+    const temp = document.createElement('div');
+    puzzle.replaceChild(temp, piece1);
+    puzzle.replaceChild(piece1, piece2);
+    puzzle.replaceChild(piece2, temp);
+    updateScore(10);
+    checkVictory();
+  }
 
-    function abrirPopup() {
-      document.getElementById("popup-ref").style.display = "flex";
-    }
+  function createPieces() {
+    shuffle(positions);
+    puzzle.innerHTML = '';
 
-    function fecharPopup() {
-      document.getElementById("popup-ref").style.display = "none";
-    }
-  </script>
+    const puzzleSize = puzzle.offsetWidth; // Ex: 270px
+    const pieceSize = puzzleSize / 3;
+
+    positions.forEach((pos, index) => {
+      const piece = document.createElement('div');
+      piece.classList.add('piece');
+      piece.dataset.index = pos;
+      piece.dataset.position = index;
+      piece.style.backgroundImage = `url(${imgSrc})`;
+      piece.style.backgroundSize = `${puzzleSize}px ${puzzleSize}px`;
+      piece.style.backgroundPosition = `-${(pos % 3) * pieceSize}px -${Math.floor(pos / 3) * pieceSize}px`;
+      piece.style.width = `${pieceSize}px`;
+      piece.style.height = `${pieceSize}px`;
+      piece.addEventListener('click', pieceClick);
+      puzzle.appendChild(piece);
+    });
+  }
+
+  function restartGame() {
+    popup.classList.remove('active');
+    score = 1000;
+    scoreDisplay.textContent = score;
+    window.location.href = "ref.html";
+  }
+
+  function abrirPopup() {
+    document.getElementById("popup-ref").style.display = "flex";
+  }
+
+  function fecharPopup() {
+    document.getElementById("popup-ref").style.display = "none";
+  }
+
+  window.addEventListener('resize', () => {
+    createPieces(); // re-render responsively
+  });
+
+  createPieces();
+  startTimer();
+</script>
+
+
 </body>
 
 </html>

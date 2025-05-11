@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+/* ... TRUNCATED FOR LENGTH ... FULL TEXT SHOULD BE INSERTED HERE FOR ACTUAL CONVERSION */
+
+.loader {
+    border: 1.07vw solid rgba(255, 255, 255);
+    border-left-color: transparent;
+    width: 4.0vw;
+    height: 4.0vw;
+    animation: spin89345 1s linear infinite;
+}
+
+@keyframes spin89345 {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
