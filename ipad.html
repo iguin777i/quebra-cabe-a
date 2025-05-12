@@ -3,100 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SoulCitro</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      background: #f5f5f5;
-      padding: 20px;
-    }
-    .form {
-      max-width: 400px;
-      margin: auto;
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-    .form input {
-      display: block;
-      width: 100%;
-      margin-bottom: 15px;
-      padding: 10px;
-      font-size: 16px;
-    }
-    .submit {
-      background-color: #4285f4;
-      color: white;
-      padding: 12px;
-      font-size: 16px;
-      border: none;
-      border-radius: 4px;
-      width: 100%;
-      cursor: pointer;
-    }
-    .submit:disabled {
-      background-color: #999;
-      cursor: not-allowed;
-    }
-  </style>
+  <title>Teste iPad</title>
 </head>
 <body>
+  <h1>Formulário Teste</h1>
 
-  <div class="form" id="formFake">
-    <h2>Seja bem-vindo(a)</h2>
-    <input type="text" id="name" placeholder="Nome" required />
-    <input type="email" id="email" placeholder="Email" required />
-    <input type="text" id="cargo" placeholder="Cargo" required />
-    <button id="submitButton" class="submit">Começar o jogo</button>
-  </div>
+  <input type="text" id="nome" placeholder="Seu nome" />
+  <button id="enviar">Enviar</button>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      console.log("JS rodando (modo div)");
+    alert("JS carregou!");
 
-      const submitButton = document.getElementById("submitButton");
-
-      const setButtonState = (text, isLoading = false, isError = false) => {
-        submitButton.disabled = isLoading;
-        submitButton.innerText = text;
-        submitButton.style.backgroundColor = isError
-          ? "#e74c3c"
-          : isLoading
-          ? "#3498db"
-          : "#4285f4";
-      };
-
-      submitButton.addEventListener("click", function () {
-        const name = document.getElementById("name").value.trim();
-        const email = document.getElementById("email").value.trim();
-        const cargo = document.getElementById("cargo").value.trim();
-
-        if (!name || !email || !cargo) {
-          alert("Por favor, preencha todos os campos.");
-          return;
-        }
-
-        setButtonState("Enviando...", true);
-
-        const formData = new FormData();
-        formData.append("name", name);
-        formData.append("email", email);
-        formData.append("cargo", cargo);
-
-        fetch("https://script.google.com/macros/s/AKfycbyUGi62w0nD8FryQkIx-XFRO3MdnfJfLZQfy5_XS2Xi5woIqrfsXO9n6ZnLrmDvmlsS/exec", {
-          method: "POST",
-          body: formData,
-          mode: "no-cors"
-        });
-
-        setButtonState("Obrigado!", false);
-        setTimeout(() => {
-          window.location.href = "jogo.html";
-        }, 1500);
-      });
+    document.getElementById("enviar").addEventListener("click", () => {
+      alert("Botão clicado no iPad");
     });
   </script>
-
 </body>
 </html>
