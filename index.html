@@ -87,69 +87,68 @@
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const form = document.getElementById("inscricaoForm");
-            const submitButton = document.getElementById("submitButton");
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("inscricaoForm");
+    const submitButton = document.getElementById("submitButton");
 
-            const setButtonState = (text, isLoading = false, isError = false) => {
-                submitButton.disabled = isLoading;
-                if (isError) {
-                    submitButton.innerText = text;
-                    submitButton.style.backgroundColor = "#e74c3c";
-                } else if (isLoading) {
-                    submitButton.innerHTML = '<div class="loader"></div>';
-                    submitButton.style.backgroundColor = "#3498db";
-                    submitButton.style.display = "flex";
-                    submitButton.style.justifyContent = "center";
-                    submitButton.style.alignItems = "center";
-                } else {
-                    submitButton.innerText = text;
-                    submitButton.style.backgroundColor = "#4285f4";
-                    submitButton.style.display = "block";
-                }
-            };
+    const setButtonState = (text, isLoading = false, isError = false) => {
+      submitButton.disabled = isLoading;
+      if (isError) {
+        submitButton.innerText = text;
+        submitButton.style.backgroundColor = "#e74c3c";
+      } else if (isLoading) {
+        submitButton.innerHTML = '<div class="loader"></div>';
+        submitButton.style.backgroundColor = "#3498db";
+        submitButton.style.display = "flex";
+        submitButton.style.justifyContent = "center";
+        submitButton.style.alignItems = "center";
+      } else {
+        submitButton.innerText = text;
+        submitButton.style.backgroundColor = "#4285f4";
+        submitButton.style.display = "block";
+      }
+    };
 
-            form.addEventListener("submit", function (event) {
-                event.preventDefault();
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
 
-                const name = document.getElementById("name").value.trim();
-                const email = document.getElementById("email").value.trim();
-                const cargo = document.getElementById("cargo").value.trim();
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const cargo = document.getElementById("cargo").value.trim();
 
-                if (!name || !email || !cargo) {
-                    alert("Por favor, preencha todos os campos.");
-                    return;
-                }
+      if (!name || !email || !cargo) {
+        alert("Por favor, preencha todos os campos.");
+        return;
+      }
 
-                setButtonState("", true);
+      setButtonState("", true);
 
-                const formData = new FormData();
-                formData.append("name", name);
-                formData.append("email", email);
-                formData.append("cargo", cargo);
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("email", email);
+      formData.append("cargo", cargo);
 
-                fetch("https://script.google.com/macros/s/AKfycbyUGi62w0nD8FryQkIx-XFRO3MdnfJfLZQfy5_XS2Xi5woIqrfsXO9n6ZnLrmDvmlsS/exec", {
-                    method: "POST",
-                    body: formData
-                })
-                    .then(response => {
-                        if (!response.ok) throw new Error("Erro na requisição");
-                        return response.text();
-                    })
-                    .then(() => {
-                        setButtonState("Obrigado!", false);
-                        setTimeout(() => {
-                            window.location.href = "jogo.html";
-                        }, 1500);
-                    })
-                    .catch(err => {
-                        console.error("Erro:", err);
-                        setButtonState("Erro ao enviar", false, true);
-                        setTimeout(() => setButtonState("Começar o jogo"), 3000);
-                    });
-            });
-        });
-    </script>
+      fetch("https://script.google.com/macros/s/AKfycbyUGi62w0nD8FryQkIx-XFRO3MdnfJfLZQfy5_XS2Xi5woIqrfsXO9n6ZnLrmDvmlsS/exec", {
+        method: "POST",
+        body: formData
+      })
+      .then(() => {
+        // Não tenta mais ler o corpo da resposta (evita o erro de CORS)
+        setButtonState("Obrigado!", false);
+        setTimeout(() => {
+          window.location.href = "jogo.html";
+        }, 1500);
+      })
+      .catch(err => {
+        console.error("Erro:", err);
+        setButtonState("Erro ao enviar", false, true);
+        setTimeout(() => setButtonState("Começar o jogo"), 3000);
+      });
+    });
+  });
+</script>
+
+
 
 </body>
 
