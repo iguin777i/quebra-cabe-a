@@ -13,7 +13,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    height: 100vh;
+    height: 100dvh;
     background: #005E33;
     background: linear-gradient(0deg, rgba(0, 94, 51, 1) 0%, rgba(21, 53, 46, 1) 100%);
     padding-top: 40px;
@@ -114,9 +114,7 @@ body {
 }
 
 .right-bottom {
-    position: absolute;
-    top: 40vh;
-    right: 1vh;
+    display: none;
 }
 
 .left-top {
@@ -544,8 +542,7 @@ body {
         padding: 10px 20px;
     }
 
-    .left-top svg,  
-    .right-bottom svg {
+    .left-top svg {
         width: 20vw;
         height: auto;
         opacity: 0.4;
