@@ -4,7 +4,7 @@
     box-sizing: border-box;
 }
 
-body {
+.body-game {
     margin: 0;
     font-family: "Raleway", sans-serif;
     font-optical-sizing: auto;
@@ -13,48 +13,44 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    height: 100dvh;
-    background: #005E33;
+    min-height: 100dvh;
     background: linear-gradient(0deg, rgba(0, 94, 51, 1) 0%, rgba(21, 53, 46, 1) 100%);
-    padding-top: 40px;
-    overflow: hidden;
+    padding: 5vw 2vw;
+    overflow: auto;
 }
 
 #hud {
     display: flex;
-    gap: 30px;
+    gap: 2vw;
     color: white;
-    font-size: 20px;
-    margin-bottom: 20px;
-    background: #005E33;
+    font-size: clamp(16px, 3vw, 18px);
+    margin-bottom: 2vh;
     background: linear-gradient(90deg, rgba(0, 94, 51, 1) 0%, rgba(21, 53, 46, 1) 100%);
-    padding: 10px 20px;
+    padding: 1.5vh 3vw;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 #hud>div {
-    /* Target the direct children divs of #hud */
     display: flex;
     align-items: center;
-    gap: 8px;
-    /* Adjust as needed for spacing between icon and text */
+    gap: 1vw;
 }
 
 .title {
-    font-size: 7vh;
+    font-size: clamp(4vh, 6vw, 6vh);
     font-weight: bold;
-    margin-bottom: 20px;
+    margin-bottom: 2vh;
     color: white;
 }
 
 #puzzle {
     display: grid;
-    grid-template-columns: repeat(3, 130px);
-    /* Increased from 100px */
-    grid-template-rows: repeat(3, 130px);
-    /* Increased from 100px */
-    gap: 5px;
+    grid-template-columns: repeat(3, minmax(45px, 10vw));
+    /* Reduced from 60px, 12vw */
+    grid-template-rows: repeat(3, minmax(45px, 10vw));
+    /* Reduced from 60px, 12vw */
+    gap: 0.5vw;
     border: 4px solid #13342D;
     border-radius: 10px;
     background-color: #15352E;
@@ -62,14 +58,10 @@ body {
 }
 
 .piece {
-    width: 130px;
-    /* Increased from 100px */
-    height: 130px;
-    /* Increased from 100px */
-    background-size: 390px 390px;
-    /* Corrected from 370px 370px */
+    width: 100%;
+    height: 100%;
+    background-size: cover;
     background-repeat: no-repeat;
-    /* Added to prevent tiling */
     border-radius: 6px;
     cursor: grab;
     transition: transform 0.3s ease;
@@ -92,14 +84,12 @@ body {
 
 .button-1 {
     display: flex;
-    gap: 30px;
+    gap: 2vw;
     color: white;
-    font-size: 20px;
-    margin-bottom: 20px;
-    margin-top: 20px;
-    background: #E7662D;
+    font-size: clamp(16px, 3vw, 18px);
+    margin: 2vh 0;
     background: linear-gradient(90deg, rgba(231, 102, 45, 1) 29%, rgba(210, 62, 39, 1) 100%);
-    padding: 10px 20px;
+    padding: 1.5vh 3vw;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     border: none;
@@ -119,18 +109,18 @@ body {
 
 .left-top {
     position: absolute;
-    top: -2vh;
-    left: 1vh;
+    top: 1vh;
+    left: 1vw;
 }
 
 .left-top svg {
-    width: 18vw;
-    height: 80vh;
+    width: clamp(100px, 18vw, 200px);
+    height: auto;
 }
 
 .right-bottom svg {
-    width: 26vw;
-    height: 96vh;
+    width: clamp(150px, 26vw, 300px);
+    height: auto;
 }
 
 /* Popup */
@@ -155,12 +145,11 @@ body {
     opacity: 1;
 }
 
-/* Modal Content */
 .popup-content {
     background: linear-gradient(to bottom right, #4CAF50, #2E7D32);
     border-radius: 24px;
-    padding: 30px;
-    width: 350px;
+    padding: 5vw;
+    width: min(90vw, 350px);
     text-align: left;
     color: white;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
@@ -168,42 +157,40 @@ body {
 }
 
 .popup-content h2 {
-    font-size: 22px;
-    margin-bottom: 20px;
+    font-size: clamp(18px, 5vw, 22px);
+    margin-bottom: 2vh;
 }
 
-/* Info Box */
 .info-box {
     background: linear-gradient(to bottom right, #003d2b, #00512d);
     border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 24px;
-    font-size: 16px;
+    padding: 3vw;
+    margin-bottom: 3vh;
+    font-size: clamp(14px, 2.5vw, 16px);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    max-width: 300px;
+    max-width: 100%;
 }
 
 .info-box p {
-    margin: 8px 0;
+    margin: 1vh 0;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 1vw;
 }
 
 .info-box strong {
     font-weight: bold;
 }
 
-/* Button */
 .popup-content button {
     width: 100%;
     background: linear-gradient(to right, #f15a29, #d62d20);
     color: white;
-    font-size: 18px;
+    font-size: clamp(16px, 3vw, 18px);
     font-weight: bold;
     border: none;
     border-radius: 16px;
-    padding: 14px;
+    padding: 2vh;
     cursor: pointer;
     transition: transform 0.2s ease;
 }
@@ -211,7 +198,6 @@ body {
 .popup-content button:hover {
     transform: scale(1.03);
 }
-
 
 .popup-fundo {
     display: none;
@@ -229,8 +215,8 @@ body {
 .popup-caixa {
     background: linear-gradient(to bottom right, #4CAF50, #2E7D32);
     border-radius: 30px;
-    padding: 20px 20px 20px;
-    width: 330px;
+    padding: 5vw;
+    width: min(90vw, 330px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
@@ -240,10 +226,10 @@ body {
 .conteudo {
     display: flex;
     background: #005f30;
-    width: 300px;
-    height: 300px;
+    width: 100%;
+    height: min(50vw, 300px);
     border-radius: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 2vh;
     background-size: cover;
     background-position: center;
 }
@@ -251,10 +237,10 @@ body {
 .fechar-btn {
     background: linear-gradient(to right, #f15a29, #d62d20);
     color: white;
-    padding: 12px 30px;
+    padding: 2vh 5vw;
     border: none;
     border-radius: 15px;
-    font-size: 16px;
+    font-size: clamp(14px, 2.5vw, 16px);
     font-weight: bold;
     cursor: pointer;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
@@ -266,35 +252,33 @@ body {
     transform: scale(1.05);
 }
 
-/* From Uiverse.io by bociKond */
-
-
 .body {
     margin: 0;
-    height: 100vh;
+    font-family: "Raleway", sans-serif;
+    font-style: normal;
     display: flex;
-    justify-content: center;
-    /* Centraliza horizontalmente */
+    flex-direction: column;
     align-items: center;
-    /* Centraliza verticalmente */
+    justify-content: flex-start;
+    min-height: 100dvh;
+    background: linear-gradient(0deg, rgba(0, 94, 51, 1) 0%, rgba(21, 53, 46, 1) 100%);
+    padding-top: 10vh;
 }
 
 .form {
-    background: #005E33;
     background: linear-gradient(65deg, rgba(0, 94, 51, 1) 0%, rgba(21, 53, 46, 1) 100%);
-    padding: 3rem 2.5rem;
+    padding: 5vw 3vw;
     border-radius: 30px;
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
-    width: 100%;
-    max-width: 510px;
+    width: min(90vw, 400px);
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 .form-title {
-    font-size: 2rem;
-    margin-bottom: 2rem;
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    margin-bottom: 2vh;
     color: #fff;
     font-weight: 600;
     text-align: center;
@@ -302,7 +286,7 @@ body {
 
 .form-control {
     position: relative;
-    margin: 20px 0 40px;
+    margin: 2vh 0 4vh;
     width: 100%;
 }
 
@@ -312,8 +296,8 @@ body {
     border-bottom: 2px #fff solid;
     display: block;
     width: 100%;
-    padding: 15px 0;
-    font-size: 18px;
+    padding: 2vh 0;
+    font-size: clamp(16px, 3vw, 18px);
     color: #fff;
 }
 
@@ -325,14 +309,14 @@ body {
 
 .form-control label {
     position: absolute;
-    top: 15px;
+    top: 2vh;
     left: 0;
     pointer-events: none;
 }
 
 .form-control label span {
     display: inline-block;
-    font-size: 18px;
+    font-size: clamp(16px, 3vw, 18px);
     min-width: 5px;
     color: #fff;
     transition: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -346,16 +330,16 @@ body {
 
 .submit {
     width: 100%;
-    padding: 1rem;
+    padding: 2vh;
     background: linear-gradient(to right, #ff6e3d, #d62d20);
     color: white;
     border: none;
     border-radius: 10px;
     font-weight: bold;
     cursor: pointer;
-    font-size: 1.3rem;
+    font-size: clamp(1rem, 3vw, 1.3rem);
     transition: background 0.3s;
-    margin-top: 1rem;
+    margin-top: 2vh;
 }
 
 .submit:hover {
@@ -363,8 +347,8 @@ body {
 }
 
 .form-footer {
-    margin-top: 1.5rem;
-    font-size: 0.95rem;
+    margin-top: 2vh;
+    font-size: clamp(0.8rem, 2vw, 0.95rem);
     color: #666;
 }
 
@@ -374,32 +358,22 @@ body {
     font-weight: 500;
 }
 
-
-/* From Uiverse.io by Fernando-sv */
 .loader {
-    border: 4px solid rgb(255, 255, 255);
+    border: 4px solid rgba(255, 255, 255);
     border-left-color: transparent;
     border-radius: 50%;
-}
-
-.loader {
-    border: 4px solid rgba(255, 255, 255);
-    border-left-color: transparent;
-    width: 15px;
-    height: 15px;
-}
-
-.loader {
-    border: 4px solid rgba(255, 255, 255);
-    border-left-color: transparent;
-    width: 15px;
-    height: 15px;
+    width: clamp(12px, 2vw, 15px);
+    height: clamp(12px, 2vw, 15px);
     animation: spin89345 1s linear infinite;
 }
 
-
-
-
+.div-premios img {
+    width: min(90vw, 400px);
+    /* Matches the form's width */
+    position: relative;
+    top: -3vh;
+    left: 0vw;
+}
 
 @keyframes spin89345 {
     0% {
@@ -411,140 +385,96 @@ body {
     }
 }
 
-@media (max-width: 500px) {
+/* Media Queries for Smaller Screens */
+@media (max-width: 768px) {
+    .body-game {
+        padding: 3vw;
+    }
+
     #puzzle {
-        width: 270px;
-        height: 270px;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: repeat(3, 1fr);
-        gap: 3px;
-    }
-
-    .piece {
-        width: 100%;
-        height: 100%;
-        aspect-ratio: 1 / 1;
-        background-size: 270px 270px;
-        background-repeat: no-repeat;
-    }
-
-    .conteudo {
-        width: 90vw;
-        max-width: 300px;
-        aspect-ratio: 1 / 1;
-    }
-
-    .popup-content,
-    .popup-caixa {
-        width: 90vw;
-        padding: 16px;
-    }
-
-    .left-top svg,
-    .right-bottom svg {
-        display: none;
-    }
-}
-
-@media (max-width: 500px) {
-    body {
-        padding: 20px 10px;
-        overflow-y: auto;
+        grid-template-columns: repeat(3, minmax(80px, 30vw));
+        /* Increased from 60px, 25vw */
+        grid-template-rows: repeat(3, minmax(80px, 30vw));
+        /* Increased from 60px, 25vw */
     }
 
     .title {
-        font-size: 5vh;
-        text-align: center;
-        margin-top: 10vh;
+        font-size: clamp(3vh, 8vw, 5vh);
     }
 
     #hud {
         flex-direction: column;
-        align-items: center;
-        gap: 15px;
-        font-size: 16px;
-        padding: 12px;
-    }
-
-    #puzzle {
-        grid-template-columns: repeat(3, 90px);
-        grid-template-rows: repeat(3, 90px);
-        gap: 4px;
-    }
-
-    .piece {
-        width: 90px;
-        height: 90px;
-        background-size: 270px 270px;
+        gap: 1vh;
+        padding: 2vh 4vw;
     }
 
     .button-1 {
-        font-size: 16px;
-        padding: 8px 8px;
-        text-align: center;
+        padding: 2vh 5vw;
     }
 
-    .box-button {
-        justify-content: center;
-        display: flex;
-        align-items: center;
-        margin-left: 4vw;
+    .popup-content {
+        padding: 6vw;
+        width: min(95vw, 320px);
     }
 
-    .popup-content,
     .popup-caixa {
-        width: 90%;
-        padding: 20px;
+        width: min(95vw, 300px);
     }
 
     .conteudo {
-        width: 90%;
-        height: auto;
-        aspect-ratio: 1 / 1;
+        height: min(60vw, 250px);
     }
 
-    .left-top svg,
-    .right-bottom svg {
-        display: none;
-        /* Oculta os SVGs decorativos */
+    .form {
+        width: min(95vw, 350px);
+        padding: 6vw 4vw;
     }
 }
 
-
-@media (min-width: 501px) and (max-width: 768px) {
-    #hud {
-        gap: 20px;
-        font-size: 18px;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    .title {
-        font-size: 6vh;
-        text-align: center;
-    }
-
+@media (max-width: 600px) {
     #puzzle {
-        grid-template-columns: repeat(3, 110px);
-        grid-template-rows: repeat(3, 110px);
-        gap: 5px;
+        grid-template-columns: repeat(3, minmax(50px, 30vw));
+        grid-template-rows: repeat(3, minmax(50px, 30vw));
+        gap: 2px;
     }
 
     .piece {
-        width: 110px;
-        height: 110px;
-        background-size: 330px 330px;
+        border-radius: 4px;
+    }
+
+    #hud {
+        font-size: clamp(14px, 4vw, 16px);
+        padding: 1.5vh 5vw;
     }
 
     .button-1 {
-        font-size: 18px;
-        padding: 10px 20px;
+        font-size: clamp(14px, 4vw, 16px);
+        padding: 1.5vh 6vw;
+    }
+
+    .popup-content {
+        width: 90vw;
+        padding: 8vw;
+    }
+
+    .popup-caixa {
+        width: 90vw;
+    }
+
+    .conteudo {
+        height: min(70vw, 200px);
+    }
+
+    .form {
+        width: 90vw;
+        padding: 8vw 5vw;
+    }
+
+    .form-title {
+        font-size: clamp(1.2rem, 6vw, 1.8rem);
     }
 
     .left-top svg {
-        width: 20vw;
-        height: auto;
-        opacity: 0.4;
+        width: clamp(80px, 25vw, 150px);
     }
-}   
+}
